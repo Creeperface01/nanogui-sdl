@@ -16,7 +16,7 @@
 #if defined(_WIN32)
 #include <SDL.h>
 #else
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #endif
 #include <numeric>
 #include <array>
@@ -169,7 +169,12 @@ void TabHeader::TabButton::drawInactiveBorderAt(SDL_Renderer *renderer, const Ve
 
     SDL_Color c = color.toSdlColor();
     SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
-    SDL_Rect r{ xPos + offset, yPos + offset, width - offset, height - offset };
+    SDL_Rect r{
+        static_cast<int>(xPos + offset),
+        static_cast<int>(yPos + offset),
+        static_cast<int>(width - offset),
+        static_cast<int>(height - offset)
+    };
     SDL_RenderDrawRect(renderer, &r);
 }
 

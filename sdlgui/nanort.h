@@ -74,7 +74,6 @@ namespace nanort {
 template <typename T, size_t stack_capacity>
 class StackAllocator : public std::allocator<T> {
 public:
-  typedef typename std::allocator<T>::pointer pointer;
   typedef typename std::allocator<T>::size_type size_type;
 
   // Backing store for the allocator. The container owner is responsible for
@@ -133,19 +132,19 @@ public:
   // Actually do the allocation. Use the stack buffer if nobody has used it yet
   // and the size requested fits. Otherwise, fall through to the standard
   // allocator.
-  pointer allocate(size_type n, void *hint = 0) {
+  T *allocate(size_type n) {
     if (source_ != NULL && !source_->used_stack_buffer_ &&
         n <= stack_capacity) {
       source_->used_stack_buffer_ = true;
       return source_->stack_buffer();
     } else {
-      return std::allocator<T>::allocate(n, hint);
+      return std::allocator<T>::allocate(n);
     }
   }
 
   // Free: when trying to free the stack buffer, just mark it as free. For
   // non-stack-buffer pointers, just fall though to the standard allocator.
-  void deallocate(pointer p, size_type n) {
+  void deallocate(T *p, size_type n) {
     if (source_ != NULL && p == source_->stack_buffer())
       source_->used_stack_buffer_ = false;
     else

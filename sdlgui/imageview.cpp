@@ -16,7 +16,7 @@
 #if defined(_WIN32)
 #include <SDL.h>
 #else
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #endif
 #include <sdlgui/theme.h>
 #include <cmath>
@@ -300,7 +300,11 @@ void ImageView::draw(SDL_Renderer* renderer)
         positionAfterOffset.y = absolutePosition().y;
       }
       SDL_Rect imgrect{ix, iy, iw, ih};
-      SDL_Rect rect{ positionAfterOffset.x, positionAfterOffset.y, imgrect.w, imgrect.h};
+      SDL_Rect rect{
+          static_cast<int>(positionAfterOffset.x),
+          static_cast<int>(positionAfterOffset.y),
+          imgrect.w,
+          imgrect.h};
 
       SDL_RenderCopy(renderer, mTexture, &imgrect, &rect);
     }
@@ -368,7 +372,12 @@ void ImageView::drawHelpers(SDL_Renderer* renderer) const
   Vector2f sizeOffsetDifference = sizeF() - mOffset;
   Vector2f scissorSize = sizeOffsetDifference.cmin(sizeF());
 
-  SDL_Rect r{ scissorPosition.x, scissorPosition.y, scissorSize.x, scissorSize.y };
+  SDL_Rect r{
+      static_cast<int>(scissorPosition.x),
+      static_cast<int>(scissorPosition.y),
+      static_cast<int>(scissorSize.x),
+      static_cast<int>(scissorSize.y)
+  };
   if (gridVisible())
     drawPixelGrid(renderer, upperLeftCorner, lowerRightCorner, mScale);
   if (pixelInfoVisible())

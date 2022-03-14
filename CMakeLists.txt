@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.8.3)
 
 project("sdlgui")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -157,7 +157,7 @@ list(APPEND NNGUI_BASIC_SOURCE
 option(NANOGUI_BUILD_EXAMPLE "Build example application" ON)
 if (NANOGUI_BUILD_EXAMPLE)
   # Build example application if desired
-  add_executable(example1 ${NNGUI_EXTRA_SOURCE} ${NNGUI_BASIC_SOURCE} example1.cpp )
+  add_executable(example1 ${NNGUI_BASIC_SOURCE} example1.cpp )
   set_target_properties(
       example1 PROPERTIES
       VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build/debug")

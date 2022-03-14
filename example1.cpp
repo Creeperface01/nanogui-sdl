@@ -42,12 +42,12 @@
 #if defined(_WIN32)
 #include <SDL.h>
 #else
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #endif
 #if defined(_WIN32)
 #include <SDL_image.h>
 #else
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #endif
 
 using std::cout;
@@ -183,12 +183,12 @@ public:
                  .widget()
                        .boxlayout(Orientation::Horizontal, Alignment::Middle, 0, 6 )
                          .button("Open", [&] {
-                                cout << "File dialog result: " << file_dialog(
-                                { {"png", "Portable Network Graphics"}, {"txt", "Text file"} }, false) << endl;
+//                                cout << "File dialog result: " << file_dialog(
+//                                { {"png", "Portable Network Graphics"}, {"txt", "Text file"} }, false) << endl;
                               })._and()
                          .button("Save", [&] {
-                                cout << "File dialog result: " << file_dialog(
-                                { {"png", "Portable Network Graphics"}, {"txt", "Text file"} }, true) << endl;
+//                                cout << "File dialog result: " << file_dialog(
+//                                { {"png", "Portable Network Graphics"}, {"txt", "Text file"} }, true) << endl;
                               });
 
           pwindow.label("Combo box", "sans-bold")._and()
